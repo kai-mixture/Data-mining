@@ -1,16 +1,19 @@
 # import module
+import matplotlib as matplotlib
 import pandas as pd
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 #import dataset and split the dataset into training and testing set
 wine_data_set = pd.read_csv("~/Documents/3年後期/データマイニング/レポート1/WINE/Data Set/winequality-white.csv",sep=";",header=0)
 
 #count quality
-count_data = wine_data_set.groupby('quality')['quality'].count()
-print(count_data)
+# count_data = wine_data_set.groupby('quality')['quality'].count()
+# print(count_data)
 
 x = wine_data_set.drop(columns = 'quality')
 y = wine_data_set['quality']
@@ -25,6 +28,15 @@ for d in y:
         new_y.append(1)
     elif d <= 9:
         new_y.append(2)
+
+#drawing
+plt.title('10 stage')
+plt.xticks([1,2,3,4,5,6,7,8,9,10])
+plt.xlabel('class')
+plt.ylabel('The number of data')
+plt.hist(y, color="blue")
+plt.show()
+plt.savefig('hist1.png')
 
 #正規化
 ms = MinMaxScaler()
